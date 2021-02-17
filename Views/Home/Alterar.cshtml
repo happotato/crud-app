@@ -1,0 +1,75 @@
+@{
+    ViewData["Title"] = "Criar";
+    var estados = ViewData["Estados"] as IEnumerable<Estado>;
+    var funcionario = ViewData["Funcionario"] as Funcionario;
+
+    var data = funcionario.DataNascimento.ToString("yyyy-MM-dd");
+}
+
+<form asp-controller="Home" asp-action="AlterarFuncionario" data-ajax="true" data-ajax-method="POST">
+    <div class="form-group">
+        <label for="nameInput">Nome*</label>
+        <input
+            type="text"
+            class="form-control"
+            id="nameInput"
+            name="name"
+            placeholder="Nome"
+            maxlength="100"
+            autocomplete="name"
+            required
+            value="@funcionario.Nome">
+    </div>
+    <div class="form-group">
+        <label for="emailInput">Email*</label>
+        <input
+            type="email"
+            class="form-control"
+            id="emailInput"
+            name="email"
+            placeholder="Email"
+            maxlength="100"
+            autocomplete="email"
+            required
+            value="@funcionario.Email">
+    </div>
+    <div class="form-group">
+        <label for="dateInput">Data de Nascimento*</label>
+        <input
+            type="date"
+            class="form-control"
+            id="dateInput"
+            name="date"
+            placeholder="Data de Nascimento"
+            autocomplete="bday"
+            required
+            value="@data">
+    </div>
+    <div class="form-group">
+        <label for="salaryInput">Salário*</label>
+        <input
+            type="number"
+            class="form-control"
+            id="salaryInput"
+            name="salary"
+            placeholder="Salário"
+            required
+            value="@funcionario.Salario">
+    </div>
+    <div class="form-group">
+        <label for="stateInput">Estado (UF)*</label>
+        <select
+            class="form-control"
+            id="stateInput"
+            name="state"
+            autocomplete="address-level1"
+            required
+            asp-items="@(new SelectList(estados, "PK_Estado", "Sigla", funcionario.FK_Estado))">
+        </select>
+    </div>
+    <p class="text-muted">
+        * Campos obrigatórios
+    </p>
+    <input type="hidden" name="key" value="@funcionario.PK_Funcionario" />
+    <input type="submit" value="Salvar" class="btn btn-primary" />
+</form>
